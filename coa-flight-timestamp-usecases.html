@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COA Flight Timestamp Field — Use Case Matrix</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel2: #172033;
+    --ink: #e2e8f0;
+    --muted: #94a3b8;
+    --line: #334155;
+    --accent: #38bdf8;
+    --good: #22c55e;
+    --warn: #f59e0b;
+    --bad: #ef4444;
+    --chip: #243349;
+    --inv: #a78bfa;
+    --vol: #34d399;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0b1220, #1e293b);
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  header h1 { margin: 0; font-size: 19px; }
+  header .sub { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  main { padding: 28px 32px; max-width: 1300px; margin: 0 auto; }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+    margin: 32px 0 6px;
+  }
+
+  .section-title.inv { border-color: var(--inv); }
+  .section-title.vol { border-color: var(--vol); }
+
+  .section-sub { color: var(--muted); font-size: 12px; margin: 0 0 14px; padding-left: 13px; }
+
+  .scroll { overflow-x: auto; border-radius: 10px; border: 1px solid var(--line); margin-bottom: 32px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    font-size: 13px;
+    min-width: 860px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--panel2);
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  td:first-child { font-weight: 600; min-width: 280px; }
+
+  tbody tr:hover { background: #1b2740; }
+
+  /* baseline row */
+  .row-baseline td { background: rgba(56,189,248,0.08); }
+  .row-baseline td:first-child { color: var(--accent); }
+
+  /* section divider */
+  .row-divider td {
+    background: var(--panel2);
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-top: 2px solid var(--line);
+  }
+
+  /* cell badges */
+  .no-change {
+    display: inline-block;
+    background: rgba(148,163,184,0.12);
+    color: #94a3b8;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .recalc {
+    display: inline-block;
+    background: rgba(245,158,11,0.15);
+    color: #fcd34d;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .recalc-detail {
+    display: inline-block;
+    background: rgba(239,68,68,0.13);
+    color: #fca5a5;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .baseline-val {
+    display: inline-block;
+    background: rgba(56,189,248,0.12);
+    color: #7dd3fc;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .badge-inv {
+    display: inline-block;
+    background: rgba(167,139,250,0.15);
+    color: #c4b5fd;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-vol {
+    display: inline-block;
+    background: rgba(52,211,153,0.15);
+    color: #6ee7b7;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 12px;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+
+  .note {
+    background: var(--panel2);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .field-header { color: var(--ink); font-weight: 700; font-size: 12px; }
+
+  .col-trip { color: #7dd3fc; }
+  .col-dp   { color: #86efac; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>COA Flight Timestamp Field — Use Case Matrix</h1>
+  <div class="sub">CMOD-148 · COA Phase 2 · Fields: coaTripFirstFltDtm · coaDpFirstFltDtm · coaDpLastFltDtm · coaTripLastFltDtm</div>
+</header>
+
+<main>
+
+  <div class="note">
+    <b>Field Definitions:</b>
+    <span class="baseline-val">coaTripFirstFltDtm</span> — Departure datetime of the 1st flight at trip level &nbsp;|&nbsp;
+    <span class="baseline-val">coaDpFirstFltDtm</span> — Departure datetime of the 1st flight at DP level &nbsp;|&nbsp;
+    <span class="baseline-val">coaDpLastFltDtm</span> — Arrival datetime of the last flight at DP level &nbsp;|&nbsp;
+    <span class="baseline-val">coaTripLastFltDtm</span> — Arrival datetime of the last flight at trip level
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="no-change">No Change</span> Field value remains unchanged from previous version</div>
+    <div class="legend-item"><span class="recalc">Recalculate</span> Field must be recalculated based on new trip/DP structure</div>
+    <div class="legend-item"><span class="recalc-detail">Recalculate (scoped)</span> Recalculate only for the affected DP</div>
+    <div class="legend-item"><span class="baseline-val">Baseline</span> Initial value set on Version 0</div>
+    <div class="legend-item"><span class="badge-inv">INV</span> Involuntary change</div>
+    <div class="legend-item"><span class="badge-vol">VOL</span> Voluntary change</div>
+  </div>
+
+  <!-- ── BASELINE ── -->
+  <div class="section-title">Baseline — Version 0</div>
+  <div class="section-sub">Initial values set when a new trip version is created</div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Use Case</th>
+          <th class="col-trip">coaTripFirstFltDtm</th>
+          <th class="col-dp">coaDpFirstFltDtm</th>
+          <th class="col-dp">coaDpLastFltDtm</th>
+          <th class="col-trip">coaTripLastFltDtm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-baseline">
+          <td>New Version 0 (trip created)</td>
+          <td><span class="baseline-val">Depart datetime of 1st flight in trip</span></td>
+          <td><span class="baseline-val">Depart datetime of 1st flight in DP</span></td>
+          <td><span class="baseline-val">Arrival datetime of last flight in DP</span></td>
+          <td><span class="baseline-val">Arrival datetime of last flight in trip</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── INVOLUNTARY ── -->
+  <div class="section-title inv">Involuntary Changes</div>
+  <div class="section-sub">System-driven changes — diversions, cancellations, operational reassignments</div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Use Case</th>
+          <th class="col-trip">coaTripFirstFltDtm</th>
+          <th class="col-dp">coaDpFirstFltDtm</th>
+          <th class="col-dp">coaDpLastFltDtm</th>
+          <th class="col-trip">coaTripLastFltDtm</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="row-divider"><td colspan="5">Flight-level changes</td></tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Removed 1st flight (trip or DP level)</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Removed last flight (trip or DP level)</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Added a flight (mid-trip)</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr class="row-divider"><td colspan="5">DP-level changes</td></tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Removed 1st DP</td>
+          <td><span class="recalc">Recalculate</span><br><small style="color:var(--muted)">Based on new 1st DP</small></td>
+          <td><span class="recalc">Recalculate</span><br><small style="color:var(--muted)">Based on new 1st DP</small></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Removed last DP</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="recalc">Recalculate</span><br><small style="color:var(--muted)">Based on new last DP</small></td>
+          <td><span class="recalc">Recalculate</span><br><small style="color:var(--muted)">Based on new last DP</small></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Added a DP</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr class="row-divider"><td colspan="5">Diversion / operational changes</td></tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Change in middle DP due to diversion</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-inv">INV</span>Save and Replace — Reserve CM (Involuntary)</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── VOLUNTARY ── -->
+  <div class="section-title vol">Voluntary Changes</div>
+  <div class="section-sub">Crew-initiated or planner-initiated changes — leg/DP additions, removals, swaps</div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Use Case</th>
+          <th class="col-trip">coaTripFirstFltDtm</th>
+          <th class="col-dp">coaDpFirstFltDtm</th>
+          <th class="col-dp">coaDpLastFltDtm</th>
+          <th class="col-trip">coaTripLastFltDtm</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="row-divider"><td colspan="5">Flight-level changes</td></tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed 1st flight of the trip</td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed 1st flight of a DP (non-trip-first)</td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed last flight of the trip</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="recalc-detail">Recalculate for last DP</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed last flight of last DP</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="recalc-detail">Recalculate for last DP</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Added a leg (mid-trip)</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr class="row-divider"><td colspan="5">DP-level changes</td></tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed 1st DP</td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Removed last DP</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Added a DP</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr class="row-divider"><td colspan="5">Diversion / mid-trip changes</td></tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Change in middle DPs due to diversion</td>
+          <td><span class="no-change">No Change</span></td>
+          <td><span class="recalc-detail">Recalculate for affected DP</span></td>
+          <td><span class="recalc-detail">Recalculate for affected DP</span></td>
+          <td><span class="no-change">No Change</span></td>
+        </tr>
+
+        <tr>
+          <td><span class="badge-vol">VOL</span>Save and Replace trip</td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+          <td><span class="recalc">Recalculate</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Version Logic:</b> Fields always reference the version containing the <b>original flight-related timings</b>.
+    If V1 contains original flight data → fields reference V1.
+    If current version is V1 and original flight data exists in V0 → fields reference V0.
+    "No Change" means the field retains its value from the prior version regardless of the event.
+  </div>
+
+</main>
+
+</body>
+</html>

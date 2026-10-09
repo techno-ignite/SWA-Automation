@@ -1,0 +1,77 @@
+{
+  "fields": {
+    "project": { "id": "10344" },
+    "summary": "TC-03: LRO Flag True When Actual Last Leg Arrival Delay = 121 Minutes (Boundary +1)",
+    "issuetype": { "id": "10004" },
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Linked Story: CREWCMBR-664", "marks": [{ "type": "strong" }] }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Precondition: A trip exists with planned and actual last leg arrival datetimes exactly 121 minutes apart." }] },
+        { "type": "rule" },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "TEST STEPS", "marks": [{ "type": "strong" }] }] },
+        {
+          "type": "table",
+          "attrs": { "isNumberColumnEnabled": true, "layout": "default" },
+          "content": [
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableHeader", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Step", "marks": [{ "type": "strong" }] }] }] },
+                { "type": "tableHeader", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Action", "marks": [{ "type": "strong" }] }] }] },
+                { "type": "tableHeader", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Test Data", "marks": [{ "type": "strong" }] }] }] },
+                { "type": "tableHeader", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Expected Result", "marks": [{ "type": "strong" }] }] }] }
+              ]
+            },
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "1" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Set up trip with plannedArrivalDateTimeUTC and actualArrivalDateTimeUTC for the last leg exactly 121 minutes apart" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "planned = 2026-03-03T18:00:00Z, actual = 2026-03-03T20:01:00Z" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Trip payload is ready with both planned and actual last leg arrival datetimes" }] }] }
+              ]
+            },
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "2" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Trigger the LRO lambda with the trip payload" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Trip with last leg delay of exactly 121 minutes" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Lambda is invoked successfully without errors" }] }] }
+              ]
+            },
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "3" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Calculate the difference between actualArrivalDateTimeUTC and plannedArrivalDateTimeUTC for the last leg" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "actual - planned = 121 minutes" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Difference is calculated as 121 minutes which is greater than 120 minutes threshold" }] }] }
+              ]
+            },
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "4" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Verify the lroEligible flag in the lambda output" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Threshold = 120 minutes, actual diff = 121 minutes (just over threshold)" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "lroEligible = true" }] }] }
+              ]
+            },
+            {
+              "type": "tableRow",
+              "content": [
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "5" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Confirm the downstream DB update lambda receives lroEligible = true" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Lambda output payload passed to DB update lambda" }] }] },
+                { "type": "tableCell", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "DB update lambda receives lroEligible = true and updates the record in DynamoDB" }] }] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

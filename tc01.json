@@ -1,0 +1,19 @@
+{
+  "fields": {
+    "project": { "id": "10344" },
+    "summary": "TC-01: LRO Flag True When Actual Last Leg Arrival Delay > 120 Minutes",
+    "issuetype": { "id": "10004" },
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Linked Story: CREWCMBR-664" }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Precondition: A trip exists with planned and actual last leg arrival datetimes." }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Given: planned last leg arrival = 2026-03-03T18:00:00Z, actual = 2026-03-03T20:05:00Z (125 min difference)" }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "When: LRO lambda calculates leg override for the trip" }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Then: lroEligible flag is set to true" }] },
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Out of Scope: LCO, RRO, Guarantees, Special Rules" }] }
+      ]
+    }
+  }
+}

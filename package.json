@@ -11,14 +11,23 @@
     "codegen": "playwright codegen",
     "codegen:save": "playwright codegen --save-storage=playwright/.auth.json",
     "codegen:auth": "playwright codegen --save-storage=playwright/.auth.json https://example.com",
-    "codegen:chrome": "playwright codegen --device='Desktop Chrome'"
+    "codegen:chrome": "playwright codegen --device='Desktop Chrome'",
+    "confluent:test": "node confluent-connection-test.js",
+    "confluent:verify": "node confluent-verify-messages.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "^1.56.1",
     "playwright": "1.56.1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1043.0",
+    "@aws-sdk/client-sfn": "^3.1043.0",
+    "@aws-sdk/util-dynamodb": "^3.996.2",
+    "dotenv": "^17.4.2",
+    "kafkajs": "^2.2.4"
   }
 }

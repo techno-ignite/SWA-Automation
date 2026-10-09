@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "action": "Set up a trip with planned last leg arrival datetime = 2026-03-03T18:00:00Z and actual last leg arrival datetime = 2026-03-03T20:05:00Z (125 min difference)",
+      "data": "plannedArrivalDateTimeUTC = 2026-03-03T18:00:00Z, actualArrivalDateTimeUTC = 2026-03-03T20:05:00Z",
+      "result": "Trip data is available with both planned and actual last leg arrival datetimes"
+    },
+    {
+      "action": "Trigger the LRO lambda to process the trip",
+      "data": "LRO-related trip with last leg delay of 125 minutes",
+      "result": "Lambda is invoked successfully"
+    },
+    {
+      "action": "Calculate the difference between actual last leg arrival and planned last leg arrival",
+      "data": "actual - planned = 125 minutes",
+      "result": "Difference is calculated as 125 minutes which is > 120 minutes"
+    },
+    {
+      "action": "Verify the lroEligible flag in the lambda output",
+      "data": "Threshold = 120 minutes, actual diff = 125 minutes",
+      "result": "lroEligible = true"
+    },
+    {
+      "action": "Confirm the downstream lambda (DB update lambda) receives lroEligible = true",
+      "data": "Lambda output payload",
+      "result": "DB update lambda receives lroEligible = true and updates the record accordingly"
+    }
+  ]
+}
