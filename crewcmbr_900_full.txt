@@ -1,0 +1,57 @@
+﻿Defect Description
+Incorrect trip credit calculated for the auto-combined trip after Auto Audit
+
+
+
+Straight Pay Labels: A, B, D, E, F, G, H, L, M, O, R, U, W, and RP
+
+Premium Pay Labels: P, Q, and S
+
+Double Time Pay Labels: J, Z, RZ
+
+Class = "C" and Class = "J" will pay double time no matter what label is on the pairing
+
+
+Build Number and/or Environment Defect Found In
+
+Techp
+
+
+
+Steps to Recreate
+Detailed list of steps to reproduce the defect.
+
+Perform Auto combined scenario from CSS
+
+Make Trip as flown
+
+Validate audit results
+
+
+
+
+Expected Results
+Trip credit is should be
+DP1:  9.50 TFP
+
+DP2: 7.71+5.00 = 12.71 TFP
+
+DP3:  6.48 TFP
+
+Pairing Total should pay: 13.00+17.21 = 30.21 
+
+After audit it is paying the sum of the duty periods.  A Pilot should never be paid less than what the individual pairings were paying before combining.  
+
+
+Actual Results
+DP credits are correct, but trip credit less than 30.21 
+
+
+
+
+
+
+
+
+
+

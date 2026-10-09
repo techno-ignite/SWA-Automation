@@ -4,3 +4,8 @@ test-results/
 ms-playwright/
 /.idea/
 /.vscode/
+
+# Secrets - never commit
+.env
+.env.*
+!.env.example

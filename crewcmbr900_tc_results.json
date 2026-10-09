@@ -1,0 +1,12 @@
+﻿{
+    "TC-900-10: Auto-Combined Trip (OTA/TTGA/Partial TTGA) Flagged for Manual Audit, Not Auto Audit":  "CSRXP-95585",
+    "TC-900-04: Full TTGA Auto-Combine - Combined Trip Not Paid Less Than Sum of Original Pairing Totals":  "CSRXP-95579",
+    "TC-900-02: OTA Auto-Combine - DP Guarantee Applied Before Combined Trip Total":  "CSRXP-95577",
+    "TC-900-06: Partial TTGA Auto-Combine - Pairing Total Equals Sum of Individual Pairing Credits (Not Sum of DPs)":  "CSRXP-95581",
+    "TC-900-07: Partial TTGA Auto-Combine - Only Traded DP Credit Recalculated":  "CSRXP-95582",
+    "TC-900-03: Full TTGA Auto-Combine - Pairing Total Equals Sum of Individual Pairing Credits (Not Sum of DPs)":  "CSRXP-95578",
+    "TC-900-05: Full TTGA Auto-Combine - Class C/J Double Time Regardless of Pairing Label":  "CSRXP-95580",
+    "TC-900-09: Mixed OTA + Full TTGA Auto-Combine - Highest Source Guarantee Honored":  "CSRXP-95584",
+    "TC-900-01: OTA Auto-Combine - Pairing Total Equals Sum of Individual Pairing Credits (Not Sum of DPs)":  "CSRXP-95576",
+    "TC-900-08: Partial TTGA Auto-Combine - Combined Trip Not Paid Less Than Sum of Original DP Credits":  "CSRXP-95583"
+}

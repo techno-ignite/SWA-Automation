@@ -1,0 +1,6130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>COA Phase 2 — Gap Analysis & Go-Live Readiness</title>
+
+
+<style>
+
+
+:root{--bg:#0f172a;--panel:#1e293b;--panel2:#172033;--ink:#e2e8f0;--muted:#94a3b8;--line:#334155;--accent:#38bdf8;--good:#22c55e;--warn:#f59e0b;--bad:#ef4444;--chip:#243349}
+
+
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px}
+
+
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+
+header.top{background:linear-gradient(135deg,#0b1220,#1e293b);padding:20px 28px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+
+
+header.top h1{margin:0;font-size:19px}header.top .sub{color:var(--muted);font-size:12px;margin-top:4px}
+
+
+.layout{display:flex;align-items:flex-start}
+
+
+nav.toc{position:sticky;top:84px;width:210px;flex:0 0 210px;padding:16px;border-right:1px solid var(--line);height:calc(100vh - 84px);overflow:auto}
+
+
+nav.toc a{display:block;color:var(--muted);padding:6px 8px;border-radius:6px;font-size:13px}nav.toc a:hover{background:var(--chip);color:var(--ink)}
+
+
+nav.toc .grp{color:#64748b;text-transform:uppercase;font-size:10px;letter-spacing:1px;margin:12px 8px 4px}
+
+
+main{flex:1;padding:24px 32px;max-width:1180px}
+
+
+section{margin-bottom:40px;scroll-margin-top:96px}
+
+
+h2{font-size:17px;border-left:3px solid var(--accent);padding-left:10px;margin:0 0 6px}
+
+
+.h2sub{color:var(--muted);font-size:12px;margin:0 0 14px;padding-left:13px}
+
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+
+
+.card .n{font-size:24px;font-weight:700}.card .l{color:var(--muted);font-size:12px;margin-top:3px}
+
+
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+
+
+.p-good{background:rgba(34,197,94,.15);color:#86efac}.p-warn{background:rgba(245,158,11,.15);color:#fcd34d}
+
+
+.p-bad{background:rgba(239,68,68,.15);color:#fca5a5}.p-none{background:rgba(148,163,184,.15);color:#cbd5e1}.p-part{background:rgba(56,189,248,.15);color:#7dd3fc}
+
+
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px}
+
+
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+
+
+th{background:var(--panel2);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer}
+
+
+tbody tr:hover{background:#1b2740}.row-bad{background:rgba(239,68,68,.06)}.row-warn{background:rgba(245,158,11,.05)}
+
+
+td.k{font-weight:600}td.zero{color:#fca5a5;font-weight:700}td.def{color:#fca5a5;font-weight:700}
+
+
+.gapblock{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+
+
+.gapblock .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+
+
+.gapblock .title{font-weight:700}.gapblock .miss{font-size:20px;font-weight:800}
+
+
+.meter{height:13px;background:var(--chip);border-radius:7px;overflow:hidden;display:flex}.meter>.cov{background:var(--good)}.meter>.par{background:var(--warn)}.meter>.gp{background:var(--bad)}
+
+
+.meter-l{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:5px}
+
+
+.note{background:var(--panel2);border:1px dashed var(--line);border-radius:8px;padding:11px 13px;color:var(--muted);font-size:13px}
+
+
+.gl{background:linear-gradient(135deg,#7f1d1d,#9a3412);border:1px solid #b45309;border-radius:12px;padding:16px 20px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+
+
+.gl .big{font-size:26px;font-weight:800}
+
+
+.scroll{max-height:520px;overflow:auto;border-radius:10px;border:1px solid var(--line)}
+
+
+.scroll table{border:0}
+
+
+.matrix td{text-align:center}.matrix td.k{text-align:left}
+
+
+.tag{font-size:10px;color:#64748b;border:1px solid var(--line);border-radius:4px;padding:1px 5px;margin-left:6px}
+
+
+.foot{color:#475569;font-size:12px;padding:18px 32px;border-top:1px solid var(--line)}
+
+
+.pyramid{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+
+
+.pyr-row{display:flex;align-items:center;gap:14px;margin:6px 0}
+
+
+.pyr-band{color:#06202c;font-weight:700;font-size:12px;padding:8px 12px;border-radius:6px;text-align:center}
+
+
+.pyr-row:nth-child(1) .pyr-band{width:30%}
+
+
+.pyr-row:nth-child(2) .pyr-band{width:46%}
+
+
+.pyr-row:nth-child(3) .pyr-band{width:62%}
+
+
+.pyr-row:nth-child(4) .pyr-band{width:80%}
+
+
+.b-e2e{background:#a78bfa}.b-ci{background:#7dd3fc}.b-unit{background:#86efac}.b-pd{background:#f0abfc}
+
+
+.pyr-desc{color:var(--muted);font-size:12px;flex:1}
+
+
+.pyr-note{color:var(--ink);font-size:12px;margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+
+
+.ev{margin-top:8px;font-size:12px}
+
+
+.ev>summary{cursor:pointer;color:var(--accent);padding:4px 0}
+
+
+.ev-body{padding:8px 10px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;margin-top:4px;line-height:1.9}
+
+
+.ev-empty{margin-top:8px;font-size:12px;color:#475569}
+
+
+.ev-item{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:4px;padding:1px 7px;margin:2px}
+
+
+</style></head><body>
+
+
+<header class="top"><h1>COA Phase 2 — Gap Analysis &amp; Go-Live Readiness</h1>
+
+
+<div class="sub">Epic OPSPORT-199 · Phase 2 start PI 26.1.4 · Target go-live 7 Jul 2026 · Generated 2026-07-07 20:16 · Data: live JIRA/XRAY + local repos</div></header>
+
+
+<div class="layout">
+
+
+<nav class="toc">
+
+
+<a href="#summary">Executive Summary</a>
+
+
+<a href="#qmo-exec">QMO Execution</a>
+
+
+<a href="#phase">Phase 2 Scope</a>
+
+
+<div class="grp">The Six Gaps</div>
+
+
+<a href="#g-req">1 · Requirement</a><a href="#g-unit">2 · Unit Test</a><a href="#g-ci">3 · CI Integration</a>
+
+
+<a href="#g-man">4 · Manual Functional</a><a href="#g-pd">5 · Post-Deploy</a><a href="#g-e2e">6 · E2E COA</a><a href="#g-overall">7 · Overall</a>
+
+
+<div class="grp">Deep Evidence</div>
+
+
+<a href="#features">Features</a><a href="#concepts">Business-Concept Matrix</a><a href="#repos">Code & Tests by Repo</a><a href="#stories">Per-Story Deep Table</a>
+
+
+<div class="grp">Defects & Action</div>
+
+
+<a href="#defects">Defect Root Cause</a><a href="#pods">POD View</a><a href="#capacity">Go-Live Capacity</a><a href="#risks">Risks & Test Plan</a>
+
+
+</nav>
+
+
+<main>
+
+
+
+
+
+<section id="summary"><h2>Executive Summary</h2>
+
+
+<p class="h2sub">Evidence for the 7 Jul 2026 go-live decision. All figures from live JIRA/XRAY and static analysis of 10 dev repos. The team owns the decision.</p>
+
+
+<div class="gl"><div><div style="font-size:11px;letter-spacing:1px;color:#fed7aa">GO-LIVE RISK SIGNAL</div>
+
+
+<div class="big">8 open defects · 12 of 39 defects = requirement-rooted</div>
+
+
+<div style="color:#fed7aa">Key exposure: business concepts in code with defects but no automated tests.</div></div>
+
+
+<div style="text-align:right;color:#fed7aa;font-size:13px">4 concepts uncovered at right layer<br>3 concepts over-tested (redundant)<br>20/73 stories no AC</div></div>
+
+
+<div class="cards">
+
+
+<div class="card"><div class="n">73</div><div class="l">COA stories (excl. Spikes &amp; No_QMO_Testing)</div></div>
+
+
+<div class="card"><div class="n">39</div><div class="l">Defects (8 open)</div></div>
+
+
+<div class="card"><div class="n">123</div><div class="l">Source functions</div></div>
+
+
+<div class="card"><div class="n">641</div><div class="l">Unit test cases</div></div>
+
+
+<div class="card"><div class="n">38</div><div class="l">CI test cases</div></div>
+
+
+<div class="card"><div class="n">163</div><div class="l">Manual XRAY (COA)</div></div>
+
+
+<div class="card"><div class="n">143</div><div class="l">Automated XRAY (CI)</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">31%</div><div class="l">Defects requirement-rooted</div></div>
+
+
+</div>
+
+
+<div class="note" style="margin-top:12px"><b>Headline:</b> 31% of defects trace to requirement/spec gaps. Measured by the test pyramid, <b>14 of 20 business concepts are covered at the appropriate layer</b> — so layer coverage is broadly healthy and the E2E/automation suite is adequate for pipeline concepts (it should be thin by design). The narrow real gaps are <b>Guarantee credit (CX/IL), Re-audit / idempotency / Completed guard, IsFlown / flown trip, DynamoDB pagination</b> (uncovered) and <b>Gate return, RRO override</b> (manual-only). Separately, 3 concepts are automated at all three layers — <b>redundancy to trim, not expand</b>.</div>
+
+
+<div class="note" style="margin-top:10px;border-color:#15803d;background:rgba(34,197,94,.08)"><b>Assumption (per team):</b> all 0 open <b>showstopper</b> (High-priority) defects —  — are fixed by EOD today. The test plan below is built on that basis: it prioritizes <b>retesting those fixes</b> and closing the coverage gaps that allowed them, then verifying the 8 remaining Medium/Low open defects.</div>
+
+
+</section>
+
+
+
+
+
+<section id="qmo-exec"><h2>QMO Test Execution Status</h2>
+
+
+<p class="h2sub">Test execution results from XRAY — [Regression_MANUAL]-E2E COA Execution (CSRXP-90124)</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Overall pass rate</span><span class="miss" style="color:var(--good)">100% passed</span></div>
+
+
+<div class="meter"><div class="cov" style="width:100%"></div><div class="gp" style="width:0%"></div><div class="par" style="width:0%"></div></div>
+
+
+<div class="meter-l"><span>38 passed</span><span>0 failed · 0 not run</span></div></div>
+
+
+<div class="cards">
+
+
+<div class="card"><div class="n">38</div><div class="l">Total test cases</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--good)">38</div><div class="l">Passed</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">0</div><div class="l">Failed</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--warn)">0</div><div class="l">Not Run</div></div>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+<section id="phase"><h2>Phase 2 Scope</h2>
+
+
+<p class="h2sub">Go-live gap analysis targets <b>Phase 2</b>. Phase is derived from sprint date (≥ PI26.1.4 / 25 Feb 2026) for stories/defects and from XRAY test-repository folder year for tests.</p>
+
+
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+
+
+<div style="flex:1;min-width:240px"><h3>Stories/Spikes</h3><table><thead><tr><th>Phase</th><th>Count</th><th>%</th></tr></thead><tbody><tr><td>Phase 2</td><td>97</td><td>80%</td></tr><tr><td>Unscheduled</td><td>7</td><td>6%</td></tr></tbody></table></div>
+
+
+<div style="flex:1;min-width:240px"><h3>Defects</h3><table><thead><tr><th>Phase</th><th>Count</th><th>%</th></tr></thead><tbody><tr><td>Phase 2</td><td>44</td><td>80%</td></tr><tr><td>Unscheduled</td><td>11</td><td>20%</td></tr></tbody></table></div>
+
+
+<div style="flex:1;min-width:240px"><h3>XRAY tests</h3><table><thead><tr><th>Phase</th><th>Count</th><th>%</th></tr></thead><tbody><tr><td>Phase 2</td><td>110</td><td>36%</td></tr><tr><td>Regression (cross-phase)</td><td>166</td><td>54%</td></tr><tr><td>Unscoped</td><td>26</td><td>8%</td></tr></tbody></table></div>
+
+
+</div>
+
+
+<div class="note" style="margin-top:10px"><b>Key read:</b> The 143 automated tests are <b>cross-phase regression</b> (coa-processor StepFunctions / KAFKA automation) and validate the COA pipeline end-to-end — this is the E2E/automation layer working as intended (thin, high-value, shared across phases). Phase 2's 110 <b>functional</b> tests are manual by design at that layer. The automation question is therefore <b>not</b> "every story needs its own automation" — it's whether the few genuinely uncovered concepts (see matrix) get automated at the right layer.</div></section>
+
+
+
+
+
+<section id="g-req"><h2>1 · Requirement Gap</h2><p class="h2sub">Acceptance-criteria completeness + concepts surfaced by defects but never specified.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Acceptance-criteria coverage</span><span class="miss" style="color:var(--warn)">27% missing</span></div><div class="meter"><div class="cov" style="width:73%"></div><div class="gp" style="width:27%"></div></div>
+
+
+  <div class="meter-l"><span>73% covered</span><span>27% missing — 20 of 73 stories lack acceptance criteria</span></div>
+
+
+<div class="ev-empty">Math: 20 of 73 stories lack acceptance criteria = 27%.</div>
+
+
+<details class="ev"><summary>▸ Show data — Stories with no acceptance criteria (20)</summary><div class="ev-body"><a href="https://southwest.atlassian.net/browse/CREWCMBR-521" target="_blank">CREWCMBR-521</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-566" target="_blank">CREWCMBR-566</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-599" target="_blank">CREWCMBR-599</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-605" target="_blank">CREWCMBR-605</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-610" target="_blank">CREWCMBR-610</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-611" target="_blank">CREWCMBR-611</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-615" target="_blank">CREWCMBR-615</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-628" target="_blank">CREWCMBR-628</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-752" target="_blank">CREWCMBR-752</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-755" target="_blank">CREWCMBR-755</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-761" target="_blank">CREWCMBR-761</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-764" target="_blank">CREWCMBR-764</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-766" target="_blank">CREWCMBR-766</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1522" target="_blank">ROTC-1522</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1523" target="_blank">ROTC-1523</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1524" target="_blank">ROTC-1524</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1525" target="_blank">ROTC-1525</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1526" target="_blank">ROTC-1526</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-812" target="_blank">CREWCMBR-812</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1545" target="_blank">ROTC-1545</a></div></details></div>
+
+
+<div class="note">Concepts uncovered at their appropriate layer with live defects: <b>Guarantee credit (CX/IL), Re-audit / idempotency / Completed guard, IsFlown / flown trip, DynamoDB pagination</b>. Manual-only (need automation): Gate return, RRO override. These align with the defect clusters below.</div></section>
+
+
+
+
+
+<section id="g-unit"><h2>2 · Unit Test Gap</h2><p class="h2sub">Unit tests should own pure logic/calculation concepts. Gap = a unit-appropriate concept with no unit test.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Unit-appropriate concept coverage</span><span class="miss" style="color:var(--warn)">29% missing</span></div><div class="meter"><div class="cov" style="width:71%"></div><div class="gp" style="width:29%"></div></div>
+
+
+  <div class="meter-l"><span>71% covered</span><span>29% missing — Unit Test</span></div>
+
+
+<div class="ev-empty">Math: 5 of 17 unit-appropriate concepts have no unit test = 29%.</div>
+
+
+<details class="ev"><summary>▸ Show data — Unit-appropriate concepts WITH unit tests (12)</summary><div class="ev-body"><span class="ev-item">LCO override core (getLcoOverride)</span><span class="ev-item">LCO exemption: Overflight</span><span class="ev-item">LCO exemption: Flagstop</span><span class="ev-item">LCO exemption: RON / remain overnight</span><span class="ev-item">Deadhead promote/demote</span><span class="ev-item">Diversion / air return</span><span class="ev-item">Flight number change</span><span class="ev-item">LRO (late return override)</span><span class="ev-item">Nonfly / LIMO legs</span><span class="ev-item">Credit compare (DP/trip credit)</span><span class="ev-item">Blaze / WAPI request mapper</span><span class="ev-item">CSS DB update</span></div></details>
+
+
+<details class="ev"><summary>▸ Show data — Unit-appropriate concepts MISSING unit tests (5)</summary><div class="ev-body"><span class="ev-item">Gate return</span><span class="ev-item">RRO override</span><span class="ev-item">Guarantee credit (CX/IL)</span><span class="ev-item">IsFlown / flown trip</span><span class="ev-item">DynamoDB pagination</span></div></details></div>
+
+
+<div class="cards"><div class="card"><div class="n">641</div><div class="l">Unit cases (26 files)</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">5</div><div class="l">Unit-appropriate concepts missing unit tests</div></div></div>
+
+
+<div class="note">Missing: <b>Gate return, RRO override, Guarantee credit (CX/IL), IsFlown / flown trip, DynamoDB pagination</b>.</div></section>
+
+
+
+
+
+<section id="g-ci"><h2>3 · CI Integration (test-function) Gap</h2><p class="h2sub">CI tests should own Lambda-integration / data-contract concepts. Gap = a CI-appropriate concept with no CI test.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">CI-appropriate concept coverage</span><span class="miss" style="color:var(--bad)">20% missing</span></div><div class="meter"><div class="cov" style="width:80%"></div><div class="gp" style="width:20%"></div></div>
+
+
+  <div class="meter-l"><span>80% covered</span><span>20% missing — CI Integration</span></div>
+
+
+<div class="ev-empty">Math: 1 of 5 CI-appropriate concepts have no CI test = 20%.</div>
+
+
+<details class="ev"><summary>▸ Show data — CI-appropriate concepts WITH CI tests (4)</summary><div class="ev-body"><span class="ev-item">LRO (late return override)</span><span class="ev-item">lcoCode data contract</span><span class="ev-item">Blaze / WAPI request mapper</span><span class="ev-item">CSS DB update</span></div></details>
+
+
+<details class="ev"><summary>▸ Show data — CI-appropriate concepts MISSING CI tests (1)</summary><div class="ev-body"><span class="ev-item">Re-audit / idempotency / Completed guard</span></div></details></div>
+
+
+<div class="note">38 CI cases in 9 files. CI-appropriate concepts missing CI: <b>Re-audit / idempotency / Completed guard</b>. Repos with source but <b>no CI tests</b>: crew-java-app-sched-period-pay-wapi-service.</div></section>
+
+
+
+
+
+<section id="g-man"><h2>4 · Manual Functional Testing Gap</h2><p class="h2sub">QMO manual XRAY functional cases linked to stories. <b>Filter applied:</b> excludes Spikes and stories labeled No_QMO_Testing.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Stories with manual functional coverage</span><span class="miss" style="color:var(--bad)">28% missing</span></div><div class="meter"><div class="cov" style="width:72%"></div><div class="gp" style="width:28%"></div></div>
+
+
+  <div class="meter-l"><span>72% covered</span><span>28% missing — 21 of 76 eligible stories have no linked manual test (excl. Spikes &amp;amp; No_QMO_Testing)</span></div>
+
+
+<div class="ev-empty">Math: 21 of 76 eligible stories (excl. Spikes &amp; Flow Type = Pick One) have no linked manual XRAY test (via "is tested by") = 28%.</div>
+
+
+<details class="ev"><summary>▸ Show data — Stories with NO linked manual test (21)</summary><div class="ev-body"><a href="https://southwest.atlassian.net/browse/CREWCMBR-672" target="_blank">CREWCMBR-672</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-704" target="_blank">CREWCMBR-704</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1448" target="_blank">ROTC-1448</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1457" target="_blank">ROTC-1457</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1458" target="_blank">ROTC-1458</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1405" target="_blank">ROTC-1405</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-748" target="_blank">CREWCMBR-748</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-755" target="_blank">CREWCMBR-755</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-761" target="_blank">CREWCMBR-761</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-762" target="_blank">CREWCMBR-762</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1459" target="_blank">ROTC-1459</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-767" target="_blank">CREWCMBR-767</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-768" target="_blank">CREWCMBR-768</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1472" target="_blank">ROTC-1472</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-780" target="_blank">CREWCMBR-780</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1496" target="_blank">ROTC-1496</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-785" target="_blank">CREWCMBR-785</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-811" target="_blank">CREWCMBR-811</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-818" target="_blank">CREWCMBR-818</a> · <a href="https://southwest.atlassian.net/browse/CREWCMBR-819" target="_blank">CREWCMBR-819</a> · <a href="https://southwest.atlassian.net/browse/ROTC-1566" target="_blank">ROTC-1566</a></div></details></div>
+
+
+<div class="cards"><div class="card"><div class="n">163</div><div class="l">Manual COA test cases</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--good)">194</div><div class="l">Passed</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--warn)">104</div><div class="l">Not run</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">2</div><div class="l">Failed</div></div></div></section>
+
+
+
+
+
+
+
+
+<section id="g-pd"><h2>5 · Post-Deploy per-Lambda Tests (DEV)</h2><p class="h2sub">GitLab-pipeline E2E smoke/integration tests that run after each Lambda deploys to DEV, against real AWS resources (boto3). Scope = one Lambda/repo, not full COA flow.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Repos with a post-deploy test suite</span><span class="miss" style="color:var(--bad)">83% missing</span></div>
+
+
+<div class="meter"><div class="cov" style="width:17%"></div><div class="gp" style="width:83%"></div></div>
+
+
+  <div class="meter-l"><span>17% covered</span><span>83% missing — repos reference post-deploy in CI but have no test</span></div>
+
+
+<div class="ev-empty">Math: 5 of 6 repos that reference post-deploy in CI have no test file.</div>
+
+
+<details class="ev"><summary>▸ Show data — Repos WITH a post-deploy test (1)</summary><div class="ev-body"><span class="ev-item">crew-pay-audit-data-pull-functions</span></div></details>
+
+
+<details class="ev"><summary>▸ Show data — Repos referencing post-deploy but with NO test (5)</summary><div class="ev-body"><span class="ev-item">crew-pay-audit-blaze-call</span><span class="ev-item">crew-pay-audit-datastore</span><span class="ev-item">crew-pay-audit-post-processor</span><span class="ev-item">crew-pay-audit-processor</span><span class="ev-item">crew-pay-audit-stepfunctions</span></div></details></div>
+
+
+<div class="cards">
+
+
+<div class="card"><div class="n" style="color:var(--good)">1</div><div class="l">Repos WITH post-deploy tests</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">5</div><div class="l">Repos referencing it but NO test</div></div>
+
+
+<div class="card"><div class="n">3</div><div class="l">Post-deploy checks total</div></div></div>
+
+
+<div class="note" style="margin-top:10px"><b>Gap:</b> only <b>crew-pay-audit-data-pull-functions</b> has a post-deploy suite (validates Lambdas + EventBridge rules exist in DEV — resource smoke, not deep functional). These reference the <code>post_deploy/test.py</code> convention in CI but ship no test: <b>crew-pay-audit-blaze-call, crew-pay-audit-datastore, crew-pay-audit-post-processor, crew-pay-audit-processor, crew-pay-audit-stepfunctions</b>. Post-deploy verification of the deployed Lambdas is therefore largely absent across the COA services.</div></section>
+
+
+
+
+
+<section id="g-e2e"><h2>6 · E2E COA &amp; Automation</h2><p class="h2sub">E2E should be a <b>thin layer of high-value end-to-end flows</b>, not one-per-story. The question is whether pipeline-level concepts are validated end to end — not story count.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Pipeline-level concept coverage at E2E</span><span class="miss" style="color:var(--warn)">50% missing</span></div><div class="meter"><div class="cov" style="width:50%"></div><div class="gp" style="width:50%"></div></div>
+
+
+  <div class="meter-l"><span>50% covered</span><span>50% missing — E2E (pipeline)</span></div>
+
+
+<div class="ev-empty">Math: 2 of 4 pipeline-level concepts lack an end-to-end flow = 50%.</div>
+
+
+<details class="ev"><summary>▸ Show data — Pipeline concepts WITH E2E coverage (2)</summary><div class="ev-body"><span class="ev-item">Nonfly / LIMO legs</span><span class="ev-item">Step function / audit workflow</span></div></details>
+
+
+<details class="ev"><summary>▸ Show data — Pipeline concepts MISSING E2E (2)</summary><div class="ev-body"><span class="ev-item">Re-audit / idempotency / Completed guard</span><span class="ev-item">IsFlown / flown trip</span></div></details></div>
+
+
+<div class="note"><b>E2E is adequate for its purpose but not gap-free.</b> The COA pipeline is validated by the qmo-crew-kafka-automation framework (COA Kafka topic → DynamoDB coaKey → Step Function <code>coa-FO-*</code> → CSS DB) plus 143 CI/API regression tests. Pipeline concepts covered: step function, nonfly. <b>E2E gaps:</b> Re-audit / idempotency / Completed guard, IsFlown / flown trip — these pipeline/state concepts (re-audit idempotency, IsFlown end-to-end) are <b>not</b> exercised by any end-to-end flow. Expecting per-story E2E would be redundant, but these specific pipeline behaviors should have an E2E flow.</div></section>
+
+
+
+
+
+<section id="g-overall"><h2>7 · Overall Test Coverage (layer-aware)</h2><p class="h2sub">Concepts covered at the appropriate layer, with redundancy flagged.</p>
+
+
+<div class="cards">
+
+
+<div class="card"><div class="n">20</div><div class="l">Business concepts tracked</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--good)">14</div><div class="l">Covered at right layer</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--warn)">2</div><div class="l">Manual-only (need automation)</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--bad)">4</div><div class="l">Uncovered at right layer</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--warn)">3</div><div class="l">Redundant (automated @3 layers)</div></div></div></section>
+
+
+
+
+
+<section id="features"><h2>Features (COA Phase 2) <span class="tag">17 features</span></h2>
+
+
+<p class="h2sub">CMOD features under the COA epic, with child-story coverage. "Stories w/ manual" and "w/ automation" count children having ≥1 of that test type.</p>
+
+
+<table><thead><tr><th>Feature</th><th>Name</th><th>POD</th><th>Child stories</th><th>w/ Manual</th><th>w/ Automation</th><th>Defects</th></tr></thead><tbody><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-648" target="_blank">CMOD-648</a></td>
+
+
+   <td>Remaining backend pay logic</td><td>Crewcumbers</td><td>32</td>
+
+
+   <td class="">17</td><td class="">1</td>
+
+
+   <td><span class="pill p-bad">2</span></td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-146" target="_blank">CMOD-146</a></td>
+
+
+   <td>Develop Back-end Logic</td><td>Crewcumbers</td><td>29</td>
+
+
+   <td class="">21</td><td class="zero">0</td>
+
+
+   <td>0</td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-838" target="_blank">CMOD-838</a></td>
+
+
+   <td>Part B</td><td>Rise of the Crew</td><td>13</td>
+
+
+   <td class="">4</td><td class="zero">0</td>
+
+
+   <td>0</td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-203" target="_blank">CMOD-203</a></td>
+
+
+   <td>Pre-production Deployment</td><td>Crewcumbers</td><td>9</td>
+
+
+   <td class="">1</td><td class="zero">0</td>
+
+
+   <td>0</td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-873" target="_blank">CMOD-873</a></td>
+
+
+   <td>Activation and Warranty Support</td><td>Rise of the Crew</td><td>7</td>
+
+
+   <td class="">1</td><td class="zero">0</td>
+
+
+   <td><span class="pill p-bad">1</span></td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-201" target="_blank">CMOD-201</a></td>
+
+
+   <td>UI Changes</td><td>Rise of the Crew</td><td>6</td>
+
+
+   <td class="">5</td><td class="zero">0</td>
+
+
+   <td>0</td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-204" target="_blank">CMOD-204</a></td>
+
+
+   <td>Activation and Warranty Support</td><td>Crewcumbers</td><td>6</td>
+
+
+   <td class="zero">0</td><td class="zero">0</td>
+
+
+   <td>0</td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-147" target="_blank">CMOD-147</a></td>
+
+
+   <td>Blaze Integration</td><td>Crewcumbers</td><td>5</td>
+
+
+   <td class="">5</td><td class="zero">0</td>
+
+
+   <td><span class="pill p-bad">1</span></td></tr><tr><td><a href="https://southwest.atlassian.net/browse/CMOD-148" target="_blank">CMOD-148</a></td>
+
+
+   <td>Flight Updates</td><td>Crewcumbers</td><td>2</td>
+
+
+   <td class="">2</td><td class="zero">0</td>
+
+
+   <td>0</td></tr></tbody></table>
+
+
+<div class="note" style="margin-top:10px">Features map to both PODs — Crewcumbers owns the back-end logic features (CMOD-146/648/204/147/148), ROTC owns UI + Part B (CMOD-201/838/873). 6 enabler/architecture features have no direct child stories.</div></section>
+
+
+
+
+
+<section id="concepts"><h2>Business-Concept Coverage Matrix <span class="tag">DEEP · layer-aware</span></h2>
+
+
+<div class="pyramid">
+
+
+  <div class="pyr-row"><div class="pyr-band b-e2e">E2E COA — full pipeline / state machine</div><div class="pyr-desc">Few high-value end-to-end flows (Kafka→DynamoDB→Step Function→CSS DB). Validates COA functionality end to end. <b>Thin by design.</b></div></div>
+
+
+  <div class="pyr-row"><div class="pyr-band b-pd">Post-deploy — per-Lambda E2E in DEV</div><div class="pyr-desc">GitLab pipeline runs after each Lambda deploys to DEV, against <b>real AWS resources</b> (boto3). Scope = that one Lambda/repo, not full COA flow.</div></div>
+
+
+  <div class="pyr-row"><div class="pyr-band b-ci">CI Functional — per-Lambda integration</div><div class="pyr-desc">Each Lambda invoked in AWS (run pre-deploy). Owns data-contract &amp; service-integration concepts.</div></div>
+
+
+  <div class="pyr-row"><div class="pyr-band b-unit">Unit — logic in isolation</div><div class="pyr-desc">Most concepts: LCO/LRO/guarantee calc, deadhead, diversion, credit-compare. Fast, broad, cheap.</div></div>
+
+
+  <div class="pyr-note">A concept is <b>covered</b> if its <b>appropriate</b> layer tests it. Testing the same concept at all three automation layers is <b>redundancy</b> (maintenance cost), not extra safety. <b>Manual functional</b> (QMO) and <b>Post-deploy</b> cut across layers and are shown separately.</div>
+
+
+</div>
+
+
+<p class="h2sub">✓ = covered where it should be · <span style="color:#fca5a5">gap</span> = missing at the right layer · + = extra layer (possible redundancy) · M = manual functional exists.</p>
+
+
+<div class="scroll"><table class="matrix"><thead><tr><th>Business concept</th><th>Right layer</th><th>Unit</th><th>CI</th><th>E2E</th><th>Manual</th><th>Defects</th><th>Verdict</th></tr></thead><tbody><tr class="">
+
+
+    <td class="k">LCO override core (getLcoOverride)</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">10</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">LCO exemption: Overflight</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">1</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">LCO exemption: Flagstop</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">1</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">LCO exemption: RON / remain overnight</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">1</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">Deadhead promote/demote</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">1</td>
+
+
+    <td><span class="pill p-good">Covered</span> <span class="pill p-warn" title="automated at all 3 layers">redundant</span></td></tr><tr class="">
+
+
+    <td class="k">Diversion / air return</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="">0</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="row-warn">
+
+
+    <td class="k">Gate return</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="">0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr class="">
+
+
+    <td class="k">Flight number change</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="">0</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">LRO (late return override)</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit+ci</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">3</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="row-warn">
+
+
+    <td class="k">RRO override</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="">0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr class="row-bad">
+
+
+    <td class="k">Guarantee credit (CX/IL)</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td class="def">5</td>
+
+
+    <td><span class="pill p-bad">Uncovered + defects</span></td></tr><tr class="">
+
+
+    <td class="k">Nonfly / LIMO legs</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit+e2e</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">7</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">lcoCode data contract</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">ci</td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">2</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="row-bad">
+
+
+    <td class="k">Re-audit / idempotency / Completed guard</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">e2e+ci</td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">2</td>
+
+
+    <td><span class="pill p-bad">Uncovered + defects</span></td></tr><tr class="row-bad">
+
+
+    <td class="k">IsFlown / flown trip</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit+e2e</td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">1</td>
+
+
+    <td><span class="pill p-bad">Uncovered + defects</span></td></tr><tr class="">
+
+
+    <td class="k">Credit compare (DP/trip credit)</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">4</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">Blaze / WAPI request mapper</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit+ci</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">8</td>
+
+
+    <td><span class="pill p-good">Covered</span></td></tr><tr class="">
+
+
+    <td class="k">CSS DB update</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">ci+unit</td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">5</td>
+
+
+    <td><span class="pill p-good">Covered</span> <span class="pill p-warn" title="automated at all 3 layers">redundant</span></td></tr><tr class="row-bad">
+
+
+    <td class="k">DynamoDB pagination</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">unit</td>
+
+
+    <td><span class="pill p-bad">gap</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td><span style="color:#475569">·</span></td>
+
+
+    <td class="">0</td>
+
+
+    <td><span class="pill p-bad">Uncovered</span></td></tr><tr class="">
+
+
+    <td class="k">Step function / audit workflow</td>
+
+
+    <td style="font-size:11px;color:var(--muted)">e2e</td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-part">+</span></td>
+
+
+    <td><span class="pill p-good">✓</span></td>
+
+
+    <td><span class="pill p-part">M</span></td>
+
+
+    <td class="def">9</td>
+
+
+    <td><span class="pill p-good">Covered</span> <span class="pill p-warn" title="automated at all 3 layers">redundant</span></td></tr></tbody></table></div>
+
+
+<div class="note" style="margin-top:10px"><b>14/20</b> concepts are covered at the appropriate layer. <b>Real gaps:</b> Guarantee credit (CX/IL), Re-audit / idempotency / Completed guard, IsFlown / flown trip, DynamoDB pagination (uncovered) · Gate return, RRO override (manual-only, needs automation). <b>Redundancy to review (automated at all 3 layers):</b> Deadhead promote/demote, CSS DB update, Step function / audit workflow.</div></section>
+
+
+
+
+
+<section id="repos"><h2>Code &amp; Tests by Repo <span class="tag">DEEP</span></h2>
+
+
+<table><thead><tr><th>Repo</th><th>Functions</th><th>Unit cases</th><th>CI cases</th><th>Flag</th></tr></thead><tbody><tr><td class="k">crew-pay-audit-blaze-call</td><td>21</td><td>161</td><td>0</td>
+
+
+   <td class="zero">no CI tests</td></tr><tr><td class="k">crew-pay-audit-data-pull-functions</td><td>19</td><td>117</td><td>8</td>
+
+
+   <td class=""></td></tr><tr><td class="k">crew-pay-audit-post-processor</td><td>40</td><td>161</td><td>15</td>
+
+
+   <td class=""></td></tr><tr><td class="k">crew-pay-audit-processor</td><td>43</td><td>202</td><td>15</td>
+
+
+   <td class=""></td></tr></tbody></table></section>
+
+
+
+
+
+<section id="stories"><h2>Per-Story Deep Table <span class="tag">73 stories</span></h2>
+
+
+<p class="h2sub">Acceptance criteria, mapped concepts, manual/automated test counts, and linked defects per story.</p>
+
+
+<div class="scroll"><table><thead><tr><th>Story</th><th>POD</th><th>Type</th><th>Sprint</th><th>AC</th><th>Concepts</th><th>Manual</th><th>Auto</th><th>Defects</th><th>Overall</th></tr></thead><tbody><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1020" target="_blank">ROTC-1020</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td>PI25.5.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1021" target="_blank">ROTC-1021</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper, css_db, stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1047" target="_blank">ROTC-1047</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td>PI26.1.1 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1048" target="_blank">ROTC-1048</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1049" target="_blank">ROTC-1049</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td>PI25.5.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper, css_db, stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1050" target="_blank">ROTC-1050</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper, css_db, stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-518" target="_blank">CREWCMBR-518</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-519" target="_blank">CREWCMBR-519</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-520" target="_blank">CREWCMBR-520</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-521" target="_blank">CREWCMBR-521</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.2 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-528" target="_blank">CREWCMBR-528</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-529" target="_blank">CREWCMBR-529</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-530" target="_blank">CREWCMBR-530</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-531" target="_blank">CREWCMBR-531</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-566" target="_blank">CREWCMBR-566</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.4 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-599" target="_blank">CREWCMBR-599</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.X - Holiday Spr</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-600" target="_blank">CREWCMBR-600</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.X - Holiday Spr</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-605" target="_blank">CREWCMBR-605</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI25.5.5 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-610" target="_blank">CREWCMBR-610</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper, stepfn</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-611" target="_blank">CREWCMBR-611</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-612" target="_blank">CREWCMBR-612</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-613" target="_blank">CREWCMBR-613</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-614" target="_blank">CREWCMBR-614</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-615" target="_blank">CREWCMBR-615</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td><span class="pill p-bad">1</span></td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-616" target="_blank">CREWCMBR-616</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-617" target="_blank">CREWCMBR-617</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>reaudit</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-620" target="_blank">CREWCMBR-620</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-623" target="_blank">CREWCMBR-623</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>credit_compare</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-625" target="_blank">CREWCMBR-625</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-626" target="_blank">CREWCMBR-626</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-627" target="_blank">CREWCMBR-627</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>isflown, stepfn</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-628" target="_blank">CREWCMBR-628</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.3 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-629" target="_blank">CREWCMBR-629</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-631" target="_blank">CREWCMBR-631</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-632" target="_blank">CREWCMBR-632</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>credit_compare</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-634" target="_blank">CREWCMBR-634</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-637" target="_blank">CREWCMBR-637</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-641" target="_blank">CREWCMBR-641</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-642" target="_blank">CREWCMBR-642</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-657" target="_blank">CREWCMBR-657</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-659" target="_blank">CREWCMBR-659</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core</td>
+
+
+    <td class="">8</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-660" target="_blank">CREWCMBR-660</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">5</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-664" target="_blank">CREWCMBR-664</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro, guarantee</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-665" target="_blank">CREWCMBR-665</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-666" target="_blank">CREWCMBR-666</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">6</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-668" target="_blank">CREWCMBR-668</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro, guarantee</td>
+
+
+    <td class="">7</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-669" target="_blank">CREWCMBR-669</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro, guarantee</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-670" target="_blank">CREWCMBR-670</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro, guarantee, credit_compare</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-672" target="_blank">CREWCMBR-672</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-673" target="_blank">CREWCMBR-673</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-674" target="_blank">CREWCMBR-674</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-677" target="_blank">CREWCMBR-677</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1421" target="_blank">ROTC-1421</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.3 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-681" target="_blank">CREWCMBR-681</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-682" target="_blank">CREWCMBR-682</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro, guarantee, stepfn</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-683" target="_blank">CREWCMBR-683</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-686" target="_blank">CREWCMBR-686</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-687" target="_blank">CREWCMBR-687</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-688" target="_blank">CREWCMBR-688</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-689" target="_blank">CREWCMBR-689</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1450" target="_blank">ROTC-1450</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1420" target="_blank">ROTC-1420</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1445" target="_blank">ROTC-1445</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1446" target="_blank">ROTC-1446</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-695" target="_blank">CREWCMBR-695</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-697" target="_blank">CREWCMBR-697</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-698" target="_blank">CREWCMBR-698</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-699" target="_blank">CREWCMBR-699</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-700" target="_blank">CREWCMBR-700</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-701" target="_blank">CREWCMBR-701</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-702" target="_blank">CREWCMBR-702</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-703" target="_blank">CREWCMBR-703</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-704" target="_blank">CREWCMBR-704</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.1.5- Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1422" target="_blank">ROTC-1422</a></td>
+
+
+    <td>Rise of the Crew</td><td>Spike</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-709" target="_blank">CREWCMBR-709</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core</td>
+
+
+    <td class="">7</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-710" target="_blank">CREWCMBR-710</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">4</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1448" target="_blank">ROTC-1448</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-712" target="_blank">CREWCMBR-712</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1451" target="_blank">ROTC-1451</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1449" target="_blank">ROTC-1449</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-715" target="_blank">CREWCMBR-715</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1457" target="_blank">ROTC-1457</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1458" target="_blank">ROTC-1458</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1452" target="_blank">ROTC-1452</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-719" target="_blank">CREWCMBR-719</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-720" target="_blank">CREWCMBR-720</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-721" target="_blank">CREWCMBR-721</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper, stepfn</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-722" target="_blank">CREWCMBR-722</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-724" target="_blank">CREWCMBR-724</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-725" target="_blank">CREWCMBR-725</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-726" target="_blank">CREWCMBR-726</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-727" target="_blank">CREWCMBR-727</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">5</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-728" target="_blank">CREWCMBR-728</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-731" target="_blank">CREWCMBR-731</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-732" target="_blank">CREWCMBR-732</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-733" target="_blank">CREWCMBR-733</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-734" target="_blank">CREWCMBR-734</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-735" target="_blank">CREWCMBR-735</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1405" target="_blank">ROTC-1405</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.3 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-739" target="_blank">CREWCMBR-739</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>credit_compare</td>
+
+
+    <td class="">4</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1433" target="_blank">ROTC-1433</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.4 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-741" target="_blank">CREWCMBR-741</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">5</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td><span class="pill p-bad">1</span></td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-742" target="_blank">CREWCMBR-742</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, rro</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-743" target="_blank">CREWCMBR-743</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-744" target="_blank">CREWCMBR-744</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-748" target="_blank">CREWCMBR-748</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>guarantee, css_db</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-752" target="_blank">CREWCMBR-752</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="">1</td>
+
+
+    <td><span class="pill p-bad">1</span></td>
+
+
+    <td><span class="pill p-good">OK</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-755" target="_blank">CREWCMBR-755</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="">1</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-good">OK</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-759" target="_blank">CREWCMBR-759</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-760" target="_blank">CREWCMBR-760</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1453" target="_blank">ROTC-1453</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>css_db</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-761" target="_blank">CREWCMBR-761</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-762" target="_blank">CREWCMBR-762</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-763" target="_blank">CREWCMBR-763</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">6</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-764" target="_blank">CREWCMBR-764</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1454" target="_blank">ROTC-1454</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1459" target="_blank">ROTC-1459</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-766" target="_blank">CREWCMBR-766</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="">5</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-767" target="_blank">CREWCMBR-767</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>isflown</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-768" target="_blank">CREWCMBR-768</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-769" target="_blank">CREWCMBR-769</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-773" target="_blank">CREWCMBR-773</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>nonfly, blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-774" target="_blank">CREWCMBR-774</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-776" target="_blank">CREWCMBR-776</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-777" target="_blank">CREWCMBR-777</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper, stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-778" target="_blank">CREWCMBR-778</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1469" target="_blank">ROTC-1469</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-779" target="_blank">CREWCMBR-779</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>lco_core, lro, rro</td>
+
+
+    <td class="">3</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1472" target="_blank">ROTC-1472</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1473" target="_blank">ROTC-1473</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-780" target="_blank">CREWCMBR-780</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1485" target="_blank">ROTC-1485</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1496" target="_blank">ROTC-1496</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-783" target="_blank">CREWCMBR-783</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-784" target="_blank">CREWCMBR-784</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-785" target="_blank">CREWCMBR-785</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1498" target="_blank">ROTC-1498</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.2.5 - ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-786" target="_blank">CREWCMBR-786</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-790" target="_blank">CREWCMBR-790</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-791" target="_blank">CREWCMBR-791</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-792" target="_blank">CREWCMBR-792</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-793" target="_blank">CREWCMBR-793</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-794" target="_blank">CREWCMBR-794</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-795" target="_blank">CREWCMBR-795</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-796" target="_blank">CREWCMBR-796</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-797" target="_blank">CREWCMBR-797</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-798" target="_blank">CREWCMBR-798</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-799" target="_blank">CREWCMBR-799</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-801" target="_blank">CREWCMBR-801</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-802" target="_blank">CREWCMBR-802</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1522" target="_blank">ROTC-1522</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td></td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td><span class="pill p-bad">1</span></td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1523" target="_blank">ROTC-1523</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.3- ROTC</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1524" target="_blank">ROTC-1524</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.4 - ROTC</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1525" target="_blank">ROTC-1525</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1526" target="_blank">ROTC-1526</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>css_db</td>
+
+
+    <td class="">1</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-804" target="_blank">CREWCMBR-804</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>blaze_mapper</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-805" target="_blank">CREWCMBR-805</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-806" target="_blank">CREWCMBR-806</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-807" target="_blank">CREWCMBR-807</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-808" target="_blank">CREWCMBR-808</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-809" target="_blank">CREWCMBR-809</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-810" target="_blank">CREWCMBR-810</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.4 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-811" target="_blank">CREWCMBR-811</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-812" target="_blank">CREWCMBR-812</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="">2</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-warn">Manual only</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-816" target="_blank">CREWCMBR-816</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-818" target="_blank">CREWCMBR-818</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-819" target="_blank">CREWCMBR-819</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1545" target="_blank">ROTC-1545</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td><span class="pill p-bad">none</span></td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-828" target="_blank">CREWCMBR-828</a></td>
+
+
+    <td>Crewcumbers</td><td>Spike</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>✓</td>
+
+
+    <td>—</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-843" target="_blank">CREWCMBR-843</a></td>
+
+
+    <td>Crewcumbers</td><td>Story</td><td></td>
+
+
+    <td>✓</td>
+
+
+    <td>css_db</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr><tr>
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1566" target="_blank">ROTC-1566</a></td>
+
+
+    <td>Rise of the Crew</td><td>Story</td><td>PI26.3.3- ROTC</td>
+
+
+    <td>✓</td>
+
+
+    <td>nonfly, blaze_mapper, stepfn</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td class="zero">0</td>
+
+
+    <td>0</td>
+
+
+    <td><span class="pill p-bad">Gap</span></td></tr></tbody></table></div></section>
+
+
+
+
+
+<section id="defects"><h2>Defect Summary</h2>
+
+
+<p class="h2sub">Defect fix progress by priority level.</p>
+
+
+<div style="margin-bottom:16px"><table><thead><tr><th>Priority</th><th>Defect Count</th><th>Fixed &amp; Tested</th><th>Dev In Progress</th><th>Fix Rate (%)</th></tr></thead><tbody><tr><td>Show Stopper</td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20High" target="_blank">9</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20High%20AND%20status%20in%20(Done%2C%20%22Ready%20for%20Sign%20Off%22%2C%20Cancel)" target="_blank">9</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20High%20AND%20status%20in%20(Open%2C%20%22Desk%20Check%22)" target="_blank">0</a></td><td style="color:var(--good);font-weight:700">100%</td></tr><tr><td>Medium</td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Medium" target="_blank">28</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Medium%20AND%20status%20in%20(Done%2C%20%22Ready%20for%20Sign%20Off%22%2C%20Cancel)" target="_blank">22</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Medium%20AND%20status%20in%20(Open%2C%20%22Desk%20Check%22)" target="_blank">6</a></td><td style="color:var(--warn);font-weight:700">78.6%</td></tr><tr><td>Low</td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Low" target="_blank">2</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Low%20AND%20status%20in%20(Done%2C%20%22Ready%20for%20Sign%20Off%22%2C%20Cancel)" target="_blank">0</a></td><td><a href="https://southwest.atlassian.net/issues/?jql=project%20in%20(CREWCMBR%2C%20ROTC)%20AND%20issuetype%20in%20(Bug%2C%20Defect)%20AND%20labels%20%3D%20COA_PHASE_2%20AND%20priority%20%3D%20Low%20AND%20status%20in%20(Open%2C%20%22Desk%20Check%22)" target="_blank">2</a></td><td style="color:var(--bad);font-weight:700">0%</td></tr><tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td>39</td><td>31</td><td>8</td><td>79.5%</td></tr></tbody></table></div>
+
+
+<h3>Root Cause Analysis</h3>
+
+
+<p class="h2sub">Each defect classified by root-cause area. Requirement/spec gaps dominate.</p>
+
+
+<div class="gapblock"><div class="head"><span class="title">Defects by root cause</span></div>
+
+
+<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Other</span><span>18 · 33%</span></div><div class="meter" style="margin:3px 0 8px"><div class="par" style="width:33%"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Requirement/spec</span><span>13 · 24%</span></div><div class="meter" style="margin:3px 0 8px"><div class="gp" style="width:24%"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Data contract</span><span>10 · 18%</span></div><div class="meter" style="margin:3px 0 8px"><div class="par" style="width:18%"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Integration/state</span><span>7 · 13%</span></div><div class="meter" style="margin:3px 0 8px"><div class="par" style="width:13%"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Calc/LCO</span><span>7 · 13%</span></div><div class="meter" style="margin:3px 0 8px"><div class="par" style="width:13%"></div></div></div>
+
+
+<div class="scroll"><table><thead><tr><th>Defect</th><th>POD</th><th>Status</th><th>Sprint</th><th>Summary</th><th>Root cause</th></tr></thead><tbody><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-847" target="_blank">CREWCMBR-847</a></td>
+
+
+    <td>Crewcumbers</td><td>Cancel</td><td></td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA |COA Trip First Flight Date/Time fields are blank when a </td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-757" target="_blank">CREWCMBR-757</a></td>
+
+
+    <td>Crewcumbers</td><td>Desk Check</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>PI2026.2.3 |GLDN2-FO |Inconsistent Version Creation When Updating Flight Timings with Defa</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-671" target="_blank">CREWCMBR-671</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>PI2026.1.3 |QA FO | Only 1 event is showing in pairing outbox table/pairing topic after tr</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-684" target="_blank">CREWCMBR-684</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.1.4 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.1.2 |COA| All AWS Step Functions workflows are failing for every trip</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-723" target="_blank">CREWCMBR-723</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.2 - Crewcumbers</td>
+
+
+    <td>PI2026.1.5 |DEV FO | internationalIndicator is showing empty value in aggregatedCrewAssign</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-738" target="_blank">CREWCMBR-738</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.2 - Crewcumbers</td>
+
+
+    <td>Phase 1 versioning defect</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-746" target="_blank">CREWCMBR-746</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>PI2026.2.3 |DEV FO | tripId is coming as 0 in assignment topic for auto combined trip from</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-747" target="_blank">CREWCMBR-747</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>PI2026.2.3 |DEV FO | distance field at leg level is coming as 0 in pairing topic for auto </td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-749" target="_blank">CREWCMBR-749</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>PI2026.2.3 |DEV FO | tripPay blaze API giving 500 status code when trip fall under 2 sched</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-750" target="_blank">CREWCMBR-750</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>QMO | PI2026.2.2 | Olive-FO | COA | Step Functions are failing during assignment and while</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-754" target="_blank">CREWCMBR-754</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.3 - Crewcumbers</td>
+
+
+    <td>FO CSS - ORT Values for FPP Pilots not being generated</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-765" target="_blank">CREWCMBR-765</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>QMO | PI2026.2.3 | TECHP-FO | COA | The distance field is showing 0 at the leg level in th</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-772" target="_blank">CREWCMBR-772</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.4 - Crewcumbers</td>
+
+
+    <td>PI2026.2.3 |TECHP-FO | Blaze calls are failing for unassigned events after Save and Replac</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-782" target="_blank">CREWCMBR-782</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td></td>
+
+
+    <td>QMO | PI2026.2.3| Techp-FO |Events are not flowing to aggregated Topic</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-787" target="_blank">CREWCMBR-787</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>PI26.2.5 - Crewcumbers</td>
+
+
+    <td>QMO_AUTOMATION| PI2026.2.3 | HYBQ-FO | CMOP Audit Window is not displayed for the trip whi</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-789" target="_blank">CREWCMBR-789</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>PI2026.1.5 |DEV FO |Re-audit happening infinite times in Phase2 due to assignment updates </td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1528" target="_blank">ROTC-1528</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td> COA Phase 2 Warranty Support ,TTGA/COA Pairing eventing issue&gt;</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-814" target="_blank">CREWCMBR-814</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>PI2026.2.5 |DEV FO | scheduleReportDateTimeUTC, scheduleReleaseDateTimeUTC values are empt</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1530" target="_blank">ROTC-1530</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td>COA Phase 2 Warranty Support ,Audit changes</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-815" target="_blank">CREWCMBR-815</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA | The audit trigger Lambda failed to invoke the Step Func</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-817" target="_blank">CREWCMBR-817</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.1 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA | Pay-audit-trigger Lambda is not auditing all assignment</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1537" target="_blank">ROTC-1537</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA | Auto Audit icon is displayed in CSS Trip even after per</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1538" target="_blank">ROTC-1538</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.1 - ROTC</td>
+
+
+    <td>QMO| PI2026.2.5 | HYBB1-FO | COA | Auto Audit Book icon is displayed in CSS Trip window wh</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-820" target="_blank">CREWCMBR-820</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA |LRO details are not updating correctly after the auto-au</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1541" target="_blank">ROTC-1541</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td>QMO| PI2026.2.5 |TECHP-FO | COA | Original Duty Period Credits and Credit Type 'G' are not</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1549" target="_blank">ROTC-1549</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.3- ROTC</td>
+
+
+    <td>Automatic Audit process is setting LCO as "P" instead of "D" in case of RON</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1546" target="_blank">ROTC-1546</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.3- ROTC</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA |LRO details are not updating correctly after the auto-au</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1548" target="_blank">ROTC-1548</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td>GD|Audit Trip Report not displaying trip for different filters</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-824" target="_blank">CREWCMBR-824</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>Incorrect UTC Conversion </td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-825" target="_blank">CREWCMBR-825</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA | Incorrect best available times at leg level in COA Sear</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-826" target="_blank">CREWCMBR-826</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA | reauditing is happening after save &amp; replace if trip is</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-829" target="_blank">CREWCMBR-829</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>Add lcoCode to applicable legs on Blaze XML request and response handling, LRO mapping upd</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1550" target="_blank">ROTC-1550</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA |LCOC transaction is incorrect in CSSDB/Search APP</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-831" target="_blank">CREWCMBR-831</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA |legchangeoverridecredit should not be 0 if legchangeover</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-832" target="_blank">CREWCMBR-832</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA |Auto Audit not processing when last leg is non-fly (LIMO</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-833" target="_blank">CREWCMBR-833</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA |Auto Audit is failing for Trips that include any nonfly </td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-834" target="_blank">CREWCMBR-834</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td></td>
+
+
+    <td>Auto audit applying LCO to Flagstop</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-835" target="_blank">CREWCMBR-835</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>Auto audit applying LCO to Overfly</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-836" target="_blank">CREWCMBR-836</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td></td>
+
+
+    <td>Auto audit is guaranteeing trip pay on trips with associated CX/IL nonfly blocks</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-837" target="_blank">CREWCMBR-837</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.2 - Crewcumbers</td>
+
+
+    <td>Not applying LCO to Deadhead Promote</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1560" target="_blank">ROTC-1560</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.2 - ROTC</td>
+
+
+    <td>QMO | PI2026.3.1 | TECHP-FO | COA | Incorrect Duty Period Date Displayed for Change DP Cre</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1564" target="_blank">ROTC-1564</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.3- ROTC</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA |Old credits are missing in transaction report</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-844" target="_blank">CREWCMBR-844</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>LCO is being incorrectly applied to nonfly nonpaid legs on a trip (LIMO/FDP/etc)</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-845" target="_blank">CREWCMBR-845</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA | BlazePull lambada is failed and giving 500 status code </td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/ROTC-1570" target="_blank">ROTC-1570</a></td>
+
+
+    <td>Rise of the Crew</td><td>Done</td><td>PI26.3.3- ROTC</td>
+
+
+    <td>Verify Hydra lambda publishing correctly to internal topic</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-846" target="_blank">CREWCMBR-846</a></td>
+
+
+    <td>Crewcumbers</td><td>Done</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>QMO| PI2026.3.1 | TECHP-FO | COA | Audit Incorrectly Triggered After Flying Newly Added Le</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-756" target="_blank">CREWCMBR-756</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>PI2026.2.3 |GLDN2-FO | Inconsistent values for "coaTripLastFltDtm" and "coaDpLastDltDtm" a</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-758" target="_blank">CREWCMBR-758</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>PI2026.2.3 | Olive-FO | COA | Assignment credit not matching with pairing credit in dynamo</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-775" target="_blank">CREWCMBR-775</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>PI2026.2.3 |DEV FO | pay-audit-workflow stepfunction is invoking in gldn east region &amp; it'</td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-788" target="_blank">CREWCMBR-788</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>QMO|PI2026.2.4 | TechP |COA | Occasionally, we are noticing that unassigned event records </td>
+
+
+    <td><span class="pill p-part">Integration/state</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-813" target="_blank">CREWCMBR-813</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>PI2026.2.5 |DEV FO | internationalIndicator is showing empty value in aggregatedCrewAssign</td>
+
+
+    <td><span class="pill p-part">Other</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-822" target="_blank">CREWCMBR-822</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA |Market Time Adjustment Issue</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-827" target="_blank">CREWCMBR-827</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td></td>
+
+
+    <td>QMO| PI2026.2.5 | TECHP-FO | COA |Audit results are not being used in Blaze pull lambada p</td>
+
+
+    <td><span class="pill p-part">Data contract</span></td></tr><tr class="row-bad">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-849" target="_blank">CREWCMBR-849</a></td>
+
+
+    <td>Crewcumbers</td><td>Open</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>When a partial trade occurs in CWA, auto audit is applying LCO to the legs picked up volun</td>
+
+
+    <td><span class="pill p-part">Calc/LCO</span></td></tr><tr class="">
+
+
+    <td><a href="https://southwest.atlassian.net/browse/CREWCMBR-838" target="_blank">CREWCMBR-838</a></td>
+
+
+    <td>Crewcumbers</td><td>Ready for Sign Off</td><td>26.3.3 - Crewcumbers</td>
+
+
+    <td>Pay not guaranteeing on DP and Trip when flown is less than original</td>
+
+
+    <td><span class="pill p-bad">Requirement/spec</span></td></tr></tbody></table></div></section>
+
+
+
+
+
+<section id="pods"><h2>POD View</h2>
+
+
+<table><thead><tr><th>POD</th><th>Stories</th><th>Defects</th><th>Stories no manual</th><th>Stories no automation</th></tr></thead><tbody><tr><td>Crewcumbers</td><td>59</td><td>43</td><td>13</td><td>58</td></tr><tr><td>Rise of the Crew</td><td>14</td><td>12</td><td>6</td><td>14</td></tr></tbody></table></section>
+
+
+
+
+
+<section id="capacity"><h2>Go-Live Capacity &amp; Effort vs 7 Jul</h2>
+
+
+<p class="h2sub">6 working days remain (excl. Jul 4–5 weekend). Effort estimates are assumption-based and reviewable. Demand below = must-fix only.</p>
+
+
+<div class="cards">
+
+
+<div class="card"><div class="n">6</div><div class="l">Working days to go-live</div></div>
+
+
+<div class="card"><div class="n">5</div><div class="l">Test resources</div></div>
+
+
+<div class="card"><div class="n">26 pd</div><div class="l">Must-fix demand</div></div>
+
+
+<div class="card"><div class="n">39 pd</div><div class="l">Total capacity</div></div>
+
+
+<div class="card"><div class="n" style="color:var(--good)">Tight/OK</div><div class="l">Overall must-fix feasibility</div></div>
+
+
+</div>
+
+
+<h3 style="color:var(--muted);font-size:13px;margin-top:14px">Team</h3>
+
+
+<table><thead><tr><th>Role</th><th>Count</th><th>Tracks</th></tr></thead><tbody><tr><td>QE (CI automation + functional)</td><td>2</td><td>CI + Unit (QE), Unit, Manual functional</td></tr><tr><td>Automation engineer</td><td>1</td><td>Automation, CI + Unit (QE)</td></tr><tr><td>E2E COA automation (dedicated)</td><td>1</td><td>E2E COA</td></tr><tr><td>Manual functional tester</td><td>1</td><td>Manual functional</td></tr></tbody></table>
+
+
+<h3 style="color:var(--muted);font-size:13px;margin-top:14px">Demand vs Capacity by track (must-fix)</h3>
+
+
+<table><thead><tr><th>Track</th><th>Demand</th><th>Capacity</th><th>Load</th><th>Feasibility</th></tr></thead><tbody><tr class=""><td>CI + Unit (QE)</td><td>6 pd</td><td>15 pd</td>
+
+
+   <td><div class="meter"><div class="cov" style="width:40%"></div></div></td>
+
+
+   <td><span class="pill p-good">feasible</span></td></tr><tr class=""><td>Unit</td><td>0 pd</td><td>6 pd</td>
+
+
+   <td><div class="meter"><div class="cov" style="width:0%"></div></div></td>
+
+
+   <td><span class="pill p-good">feasible</span></td></tr><tr class=""><td>Automation</td><td>3 pd</td><td>3 pd</td>
+
+
+   <td><div class="meter"><div class="cov" style="width:100%"></div></div></td>
+
+
+   <td><span class="pill p-good">feasible</span></td></tr><tr class=""><td>E2E COA</td><td>4 pd</td><td>6 pd</td>
+
+
+   <td><div class="meter"><div class="cov" style="width:67%"></div></div></td>
+
+
+   <td><span class="pill p-good">feasible</span></td></tr><tr class="row-bad"><td>Manual functional</td><td>13 pd</td><td>9 pd</td>
+
+
+   <td><div class="meter"><div class="gp" style="width:100%"></div></div></td>
+
+
+   <td><span class="pill p-bad">over capacity</span></td></tr></tbody></table>
+
+
+<div class="note" style="margin-top:10px"><b>Bottleneck:</b> Manual functional is over capacity — the single manual tester cannot execute the not-run backlog + retest open defects + LCO-exempt cases in 6 days. Pull the 2 QEs into functional execution (they can do functional) and/or defer non-critical manual regression. <b>The remaining automation work (6 pd) targets only the genuinely uncovered concepts</b> and is correctly fast-follow — not a per-story backfill.</div>
+
+
+</section>
+
+
+
+
+
+<section id="risks"><h2>Risks &amp; Go-Live Testing Plan (7 Jul)</h2>
+
+
+<p class="h2sub">Derived from the gaps and capacity model above.</p>
+
+
+<table><thead><tr><th>Risk</th><th>Evidence</th><th>Severity</th></tr></thead><tbody>
+
+
+<tr class="row-bad"><td>Guarantee (CX/IL) logic has defects but zero tests</td><td>code present, 0 unit/CI/E2E, 5 defects</td><td><span class="pill p-bad">High</span></td></tr>
+
+
+<tr class="row-bad"><td>Re-audit/idempotency untested</td><td>code present, 0 tests, 2 defects</td><td><span class="pill p-bad">High</span></td></tr>
+
+
+<tr class="row-bad"><td>Manual functional over capacity for the runway</td><td>13 pd demand vs 9 pd capacity</td><td><span class="pill p-bad">High</span></td></tr>
+
+
+<tr class="row-warn"><td>Redundant automation across layers (maintenance cost)</td><td>3 concepts automated at unit+CI+E2E: Deadhead promote/demote, CSS DB update, Step function / audit workflow</td><td><span class="pill p-warn">Med</span></td></tr>
+
+
+<tr class="row-warn"><td>20 stories without acceptance criteria</td><td>requirement gap signal</td><td><span class="pill p-warn">Med</span></td></tr>
+
+
+</tbody></table>
+
+
+<h3 style="color:var(--muted);font-size:13px;margin-top:16px">Must-fix before 7 Jul (26 pd)</h3>
+
+
+<table><thead><tr><th>#</th><th>Action</th><th>Track</th><th>Effort</th><th>Addresses</th></tr></thead><tbody><tr><td>1</td><td>Retest + sign-off 0 fixed showstoppers (LRO / best-times / duty-period)</td><td>Manual functional</td><td>2 pd</td><td>fixed EOD today — confirm + regression</td></tr><tr><td>2</td><td>Unit + CI tests for Guarantee (CX/IL) logic</td><td>CI + Unit (QE)</td><td>4 pd</td><td>5 defects, untested in code</td></tr><tr><td>3</td><td>Re-audit idempotency / Completed-guard test</td><td>CI + Unit (QE)</td><td>2 pd</td><td>2 defects, untested</td></tr><tr><td>4</td><td>Specify + test LCO exempt legs (Overfly/Flagstop/RON)</td><td>Manual functional</td><td>3 pd</td><td>spec gap + manual cases</td></tr><tr><td>5</td><td>lcoCode end-to-end contract test (Blaze→mapper→CSS DB)</td><td>Automation</td><td>3 pd</td><td>data-contract defects</td></tr><tr><td>6</td><td>Verify/retest 8 remaining open defects (Medium/Low) as fixed</td><td>Manual functional</td><td>4 pd</td><td>remaining open defects</td></tr><tr><td>7</td><td>Execute critical-path subset of not-run manual tests (104 backlog)</td><td>Manual functional</td><td>4 pd</td><td>unverified coverage on core pay paths</td></tr><tr><td>8</td><td>Critical-path E2E COA pipeline validation runs</td><td>E2E COA</td><td>4 pd</td><td>end-to-end confidence</td></tr></tbody></table>
+
+
+<h3 style="color:var(--muted);font-size:13px;margin-top:16px">Fast-follow (after go-live)</h3>
+
+
+<table><thead><tr><th>Action</th><th>Track</th><th>Effort</th><th>Addresses</th></tr></thead><tbody><tr><td>Automate genuinely uncovered/manual-only concepts at the right layer (guarantee, pagination, gate-return, RRO)</td><td>Automation</td><td>6 pd</td><td>close real automation gaps (not per-story)</td></tr><tr><td>CI tests for blaze-call / datastore / stepfunctions</td><td>CI + Unit (QE)</td><td>6 pd</td><td>CI holes</td></tr><tr><td>Review &amp; de-duplicate redundant automation (concepts tested at all 3 layers)</td><td>Automation</td><td>3 pd</td><td>reduce maintenance cost</td></tr><tr><td>Add post-deploy per-Lambda tests for the 5 repos that lack them</td><td>CI + Unit (QE)</td><td>5 pd</td><td>post-deploy DEV verification gap</td></tr><tr><td>Full not-run manual backlog clearance</td><td>Manual functional</td><td>6 pd</td><td>remaining manual backlog</td></tr></tbody></table>
+
+
+<div class="note" style="margin-top:10px">Dashboard presents evidence and a feasibility model; the go/no-go decision is the team's. Recommended posture: <b>conditional go</b> — complete must-fix (esp. Guarantee + re-audit tests and open-defect retest), pull QEs into manual execution, and defer automation backfill to fast-follow.</div></section>
+
+
+
+
+
+</main></div>
+
+
+<div class="foot">Generated 2026-07-07 20:16 from live JIRA (epic OPSPORT-199), XRAY (CSRXP, COA folders + isTestedBy), and static analysis of local dev + E2E repos. Concept/defect classification is keyword-based and reviewable in deep-analysis.json.
+
+
+<br><b>Data provenance &amp; depth:</b> Stories/defects = live JIRA (full fields incl. acceptance criteria, sprint, links). Code = static analysis of 10 Node repos (123 functions) + E2E Java framework. Tests = 306 COA XRAY tests (type/status/labels/folder); step-level detail available for only 24 of 306 (XRAY does not expose structured steps for the rest). Test layers: Unit (641) · CI functional (38) · Post-deploy per-Lambda (3 checks, 1/10 repos) · E2E COA framework + 143 regression-automation tests. Architecture diagrams included as reference images (not machine-parsed). Effort/capacity figures are estimates and reviewable.</div>
+
+
+<script>
+
+
+document.querySelectorAll('table').forEach(t=>t.querySelectorAll('th').forEach((th,i)=>th.addEventListener('click',()=>{const tb=t.querySelector('tbody');if(!tb)return;const rows=[...tb.rows];const asc=th._asc=!th._asc;rows.sort((a,b)=>{const x=a.cells[i]?.innerText||'',y=b.cells[i]?.innerText||'';const nx=parseFloat(x),ny=parseFloat(y);if(!isNaN(nx)&&!isNaN(ny))return asc?nx-ny:ny-nx;return asc?x.localeCompare(y):y.localeCompare(x)});rows.forEach(r=>tb.appendChild(r))})));
+
+
+</script>
+
+
+</body></html>
